@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>wmasson RSS feed.</title>
+        <link></link>
+        <description><![CDATA[wmasson posts]]></description>
+        <atom:link href="/rss.xml" rel="self"
+                   type="application/rss+xml" />
+        <lastBuildDate>Sat, 22 Dec 2012 00:00:00 UT</lastBuildDate>
+        <item>
+    <title>Hello World</title>
+    <link>/posts/hello-world.html</link>
+    <description><![CDATA[<h2>Hello World</h2>
+
+<p>On <strong>December 22, 2012</strong></p>
+
+<p>This is the inaugural post, the smashing of the bottle on the bow if you will.</p>
+<p>Nothing else is here yet.</p>
+
+<p>Tags: <a href="/tags/admin.html">admin</a>.</p>
+
+]]></description>
+    <pubDate>Sat, 22 Dec 2012 00:00:00 UT</pubDate>
+    <guid>/posts/hello-world.html</guid>
+</item>
+
+    </channel> 
+</rss>
