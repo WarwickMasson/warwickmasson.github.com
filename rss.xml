@@ -2,14 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>wmasson RSS feed.</title>
-        <link></link>
-        <description><![CDATA[wmasson posts]]></description>
-        <atom:link href="/rss.xml" rel="self"
+        <link>http://wmasson.com</link>
+        <description><![CDATA[posts from wmasson.com.]]></description>
+        <atom:link href="http://wmasson.com/rss.xml" rel="self"
                    type="application/rss+xml" />
         <lastBuildDate>Sun, 06 Jan 2013 00:00:00 UT</lastBuildDate>
         <item>
     <title>Memoizing Functions in Python</title>
-    <link>/posts/memoizing_in_python.html</link>
+    <link>http://wmasson.com/posts/memoizing_in_python.html</link>
     <description><![CDATA[<h2>Memoizing Functions in Python</h2>
 
 <p>On <strong>January  6, 2013</strong></p>
@@ -62,6 +62,8 @@ memoize_f = memoize_func(f)</code></pre>
 			<span class="kw">return</span> <span class="ot">self</span>.seen[x]</code></pre>
 <p>This uses python’s *args feature to get a list of arguments.</p>
 
+<p>Tags: <a href="/tags/python.html">python</a>, <a href="/tags/functional programming.html">functional programming</a>.</p>
+
 <p>
  <div id="disqus_thread"></div>
     <script type="text/javascript">
@@ -78,12 +80,9 @@ memoize_f = memoize_func(f)</code></pre>
     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 </p>  
-
-<p>Tags: <a href="/tags/python.html">python</a>, <a href="/tags/functional programming.html">functional programming</a>.</p>
-
 ]]></description>
     <pubDate>Sun, 06 Jan 2013 00:00:00 UT</pubDate>
-    <guid>/posts/memoizing_in_python.html</guid>
+    <guid>http://wmasson.com/posts/memoizing_in_python.html</guid>
 </item>
 
     </channel> 
