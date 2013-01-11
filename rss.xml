@@ -6,8 +6,60 @@
         <description><![CDATA[posts from wmasson.com.]]></description>
         <atom:link href="http://wmasson.com/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Sun, 06 Jan 2013 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Fri, 11 Jan 2013 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Building a brainfuck to c compiler (in c)</title>
+    <link>http://wmasson.com/posts/brainfuck_to_c.html</link>
+    <description><![CDATA[<h2>Building a brainfuck to c compiler (in c)</h2>
+
+<p>On <strong>January 11, 2013</strong></p>
+
+<p>Brainfuck is a simple turing machine language. It’s also a turing tarpit - a language that is turing complete but just about impossible to write useful programs in. It’s operation is incredibly simple - imagine you have an infinite length of tape where each square contains a number. You have a “head” that sits on one of the squares. The commands are as follows:</p>
+<pre><code>&lt; : move the head left one square
+&gt; : move the head right one square
++ : increment the head square
+- : decrement the head square
+. : print the head square
+\ : get a character from standard input
+[ : while the head square is not zero do
+] : end [ block</code></pre>
+<p>and that’s all. The awesome part about this simplicity is that each command can be mapped exactly to a piece of c code. We need some memory so create an array of some fixed size. We also need a number to represent the head.</p>
+<pre class="sourceCode c"><code class="sourceCode c"><span class="dt">int</span> memory[size];
+<span class="dt">int</span> p = size/<span class="dv">2</span>;</code></pre>
+<p>Then the transformations are</p>
+<pre class="sourceCode c"><code class="sourceCode c">&lt; : <span class="kw">if</span>(p&gt;<span class="dv">0</span>)p--;
+&gt; : <span class="kw">if</span>(p&lt;size<span class="dv">-1</span>)p++;
++ : memory[p]++;
+- : memory[p]--;
+. : putchar(memory[p]);
+\ : memory[p] = getchar();
+[ : <span class="kw">while</span>(memory[p]!=<span class="dv">0</span>){
+] : }</code></pre>
+<p>We need to limit the head movements so it doesn’t go out of the memory. To compile a brainfuck file we just need to go through the characters and emit the right c code. The completed code is on <a href="https://github.com/WarwickMasson/brainfuck-to-c">github</a>. This version properly formats the c code by adding indents.</p>
+
+<p>Tags: <a href="/tags/brainfuck.html">brainfuck</a>, <a href="/tags/c.html">c</a>.</p>
+
+<p>
+ <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'wmasson'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</p>  
+]]></description>
+    <pubDate>Fri, 11 Jan 2013 00:00:00 UT</pubDate>
+    <guid>http://wmasson.com/posts/brainfuck_to_c.html</guid>
+</item>
+<item>
     <title>Memoizing Functions in Python</title>
     <link>http://wmasson.com/posts/memoizing_in_python.html</link>
     <description><![CDATA[<h2>Memoizing Functions in Python</h2>
