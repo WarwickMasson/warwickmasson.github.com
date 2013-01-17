@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+        <title>wmasson - Visualizing Markov Chains</title>
+        <link rel="stylesheet" type="text/css" href="../css/default.css"></link>
+	<link rel="stylesheet" type="text/css" href="../css/syntax.css"></link>
+        <link rel="alternate" type="application/rss+xml" title="Blog" href="../rss.xml"></link>
+    </head>
+    <body>
+        <h1><div id="title"><span class="rounded">wmasson</span></div></h1>
+        <div id="navigation">
+            <p><a href="../" class="rounded">Home</a></p>
+            <p><a href="../posts.html" class="rounded">Posts</a></p>
+	    <p><a href="../tags.html" class="rounded">Tags</a></p>
+            <p><a href="../about.html" class="rounded">About</a></p>
+	    <p><a href="../rss.xml" class="rounded">RSS</a></p>
+        </div>
+        <div id="content"><h2>Visualizing Markov Chains</h2>
+
+<p>On <strong>January 17, 2013</strong></p>
+
+<p>Markov chains are used for modelling processes that have a number of possible states and at each time step move from the current state to the next one based on some transition probabilities. The collection of transition probabilities is given in the form of a transition matrix. For example, suppose we have 2 weather states: rainy and sunny. Then if the transition probabilities are given by</p>
+<pre><code>rainy to sunny: 70%
+rainy to rainy: 30%
+sunny to rainy: 5%
+sunny to sunny: 95%</code></pre>
+<p>So the transition matrix is then</p>
+<pre><code>        sunny   rainy
+sunny    0.95    0.05
+rainy    0.7     0.3</code></pre>
+<p>A markov chain also has a set of initial probabilities - how likely it is to start in a given state. For example the probabilities of starting a new season may be</p>
+<pre><code>sunny 90%
+rainy 10%</code></pre>
+<p>It’s easy to imagine how this chains works - a large number of sunny days with occasional rainy days and rarer rainy periods. Imagining how larger markov chains operate can be difficult when we have for example 10 states and consequently a 10 by 10 transition matrix. One way is follow an instances of the chain as it moves from state to state. This gives us some idea, but it can still be hard to see exactly how the probabilities work. Rather, let’s follow a group of instances.</p>
+<p>This animation simulates a large number of ants moving from nest to nest. When the ant arrives at a next nest, it moves to another nest based on a randomly generated transition matrix. I’ve biased the transition matrix so that it appears more uneven and added some noise to the speed of the ants so that they don’t just set off at the same time.</p>
+<iframe style="border: 0px;" scrolling="no" width="500px" height="500px" src="../js/markov_chain.html"></iframe>
+
+<p>Notice how certain paths are very well travelled and others only have intermittent ants. The number of ants of a path from nest A to nest B is not just dependent on probability of going from A to B but also how many ants are going to A in the first place. This allows us to see the general traffic flow in the chain.</p>
+
+<p>Tags: <a href="../tags/d3.html">d3</a>, <a href="../tags/markov chains.html">markov chains</a>.</p>
+
+<p>
+ <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'wmasson'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</p>  
+</div>
+        <div id="footer">
+            <p>This site generated using <a href="http://jaspervdj.be/hakyll">Hakyll</a>.
+            Background by <a href="http://subtlepatterns.com/cubes">Sander Ottens</a>.</p>
+        </div>
+    </body>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-37381827-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</html>
