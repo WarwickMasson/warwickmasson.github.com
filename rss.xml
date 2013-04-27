@@ -6,15 +6,8 @@
         <description><![CDATA[Posts from wmasson.com]]></description>
         <atom:link href="http://wmasson.com/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Sat, 02 Feb 2013 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Sat, 26 Jan 2013 00:00:00 UT</lastBuildDate>
         <item>
-    <title>Metaphors for Hidden Markov Models</title>
-    <link>http://wmasson.com/posts/2013-02-02-metaphors-hmm.html</link>
-    <description><![CDATA[]]></description>
-    <pubDate>Sat, 02 Feb 2013 00:00:00 UT</pubDate>
-    <guid>http://wmasson.com/posts/2013-02-02-metaphors-hmm.html</guid>
-</item>
-<item>
     <title>Nondeterministic Programming in Haskell</title>
     <link>http://wmasson.com/posts/2013-01-26-nondeterministic-computing.html</link>
     <description><![CDATA[]]></description>

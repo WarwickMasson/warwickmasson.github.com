@@ -27,7 +27,7 @@
           (b (amb <span class="dv">4</span> <span class="dv">5</span> <span class="dv">6</span>)))
         (require (<span class="kw">=</span> <span class="dv">8</span> (<span class="kw">+</span> a b)))
         (<span class="kw">list</span> a b)))</code></pre>
-<p>This will return a and b sum to 8 and are from certain sets. The problem with amb is that it requires either a complex evaluator or macro to get it to work. Haskell gives an alternative to this: the list monad. The list monad works almost identically to amb except that it will return all possible values instead of just one. So how does this work? The instance of list is as follows:</p>
+<p>This will return a and b such that they sum to 8 and are from certain sets. The problem with amb is that it requires either a complex evaluator or macro to get it to work. Haskell gives an alternative to this: the list monad. The list monad works almost identically to amb except that it will return all possible values instead of just one. So how does this work? The instance of list is as follows:</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">instance</span> <span class="kw">Monad</span> [] <span class="kw">where</span>
     <span class="fu">return</span> x <span class="fu">=</span> [x]
     xs <span class="fu">&gt;&gt;=</span> f <span class="fu">=</span> <span class="fu">concat</span> (<span class="fu">map</span> f xs)
