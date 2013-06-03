@@ -21,32 +21,32 @@
 
 <p>On <strong>January 26, 2013</strong></p>
 
-<p>Warning, here be monads. Nondeterministic programming involves automatic searching for an answer given some constraints. <a href="http://mitpress.mit.edu/sicp/full-text/">Sicp</a> a book you should read if you haven’t already) introduces this concept with the <a href="http://mitpress.mit.edu/sicp/full-text/sicp/book/node89.html/">amb operator</a>. (amb e1 e2 … en) returns one of e1 … en ambiguously based on a set of rules. These rules are specified by using the require operator. (require <cond>) will stop amb from selecting values that prevent <cond> from being true. For example we can state</p>
+<p>Warning, here be monads. Nondeterministic programming involves automatic searching for an answer given some constraints. <a href="http://mitpress.mit.edu/sicp/full-text/">Sicp</a> (a book you should read if you haven’t already) introduces this concept with the <a href="http://mitpress.mit.edu/sicp/full-text/sicp/book/node89.html/">amb operator</a>. (amb e1 e2 … en) returns one of e1, e2, … , en ambiguously based on a set of rules. These rules are specified by using the require operator. (require <cond>) will stop amb from selecting values that prevent <cond> from being true. For example we can state</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> </span>(get-even)
     (<span class="kw">let</span> ((a (amb <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>))
           (b (amb <span class="dv">4</span> <span class="dv">5</span> <span class="dv">6</span>)))
         (require (<span class="kw">=</span> <span class="dv">8</span> (<span class="kw">+</span> a b)))
         (<span class="kw">list</span> a b)))</code></pre>
-<p>This will return a and b such that they sum to 8 and are from certain sets. The problem with amb is that it requires either a complex evaluator or macro to get it to work. Haskell gives an alternative to this: the list monad. The list monad works almost identically to amb except that it will return all possible values instead of just one. So how does this work? The instance of list is as follows:</p>
+<p>This will return a and b such that they sum to 8 and are from certain sets. The problem with amb is that it requires either a complex evaluator or macro. Haskell gives an alternative to this: the list monad. The list monad works almost identically to amb except that it will return all possible values instead of just one. So how does this work? The monad instance for list is as follows:</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">instance</span> <span class="kw">Monad</span> [] <span class="kw">where</span>
     <span class="fu">return</span> x <span class="fu">=</span> [x]
     xs <span class="fu">&gt;&gt;=</span> f <span class="fu">=</span> <span class="fu">concat</span> (<span class="fu">map</span> f xs)
     <span class="fu">fail</span> _ <span class="fu">=</span> []</code></pre>
-<p>When we return a value we just wrap it in a list. Binding works as follows xs &gt;&gt;= f will map all items of xs to f then concat them together. When we fail we just get an empty list. For example</p>
+<p>When we return a value we just wrap it in a list. Binding works as follows. xs &gt;&gt;= f will concat all the results of mapping f to xs. When we fail we just get an empty list. For example:</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>] <span class="fu">&gt;&gt;=</span> \x <span class="ot">-&gt;</span> [<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>] <span class="fu">&gt;&gt;=</span> \y <span class="ot">-&gt;</span> <span class="fu">return</span> (x,y)</code></pre>
-<p>will return all pairs (x,y) where x is from [1,2,3] and y is from [4,5,6]. The above example is ugly because we need to chain the different parts together with &gt;&gt;= and lambda declarations. Haskell provides do notation which chains functions together automatically.</p>
+<p>will return all pairs (x,y) where x is from [1,2,3] and y is from [4,5,6]. The above example is ugly because we need to chain the different parts together with &gt;&gt;= and lambda declarations. Haskell provides “do” notation which chains functions together automatically. For example:</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">pairs <span class="fu">=</span> <span class="kw">do</span> x <span class="ot">&lt;-</span> [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>]
            y <span class="ot">&lt;-</span> [<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>]
            <span class="fu">return</span> (x,y)</code></pre>
-<p>The function (guard <cond>) will pass the value unchanged to the next function if <cond> is true and fails (passes []) otherwise. If for example we want all pairs (x,y) such that x + y == 8 then we can add a guard to ensure this.</p>
+<p>Will result all pairs as in the previous example. The function (guard <cond>) will pass the value unchanged to the next function if <cond> is true and fails (passes []) otherwise. If for example we want all pairs (x,y) such that x + y == 8 then we can add a guard to ensure this.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import</span> <span class="dt">Control.Monad</span>
 
 pairs <span class="fu">=</span> <span class="kw">do</span> x <span class="ot">&lt;-</span> [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>]
            y <span class="ot">&lt;-</span> [<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>]
            guard (x<span class="fu">+</span>y<span class="fu">==</span><span class="dv">8</span>)
            <span class="fu">return</span> (x,y)</code></pre>
-<p>As you might have noticed this is exactly what we wanted to do with amb in the scheme example. guard works just like require did, we just state it and it eliminates all the values which don’t satisfy the stated conditions.</p>
-<p>One cool thing to do with amb is solve logic problems. The Sicp chapter on non-deterministic values gives a number of these, let’s try translate some of these into do notation.</p>
+<p>As you might have noticed this is exactly what we wanted to do with amb in the scheme example. guard works just like require did, in that it eliminates all the values which don’t satisfy the stated conditions.</p>
+<p>A neat application of amb is solving logic problems. The Sicp chapter on non-deterministic values gives a number of these, let’s try translate some of these into do notation.</p>
 <p>The first problem is simple and stated as follows in Sicp:</p>
 <pre><code>Baker, Cooper, Fletcher, Miller, and Smith live on different floors 
 of an apartment house that contains only five floors. 
@@ -73,8 +73,8 @@ assignFloors <span class="fu">=</span> <span class="kw">do</span> baker <span cl
                   guard (apart fletcher smith)
                   guard (apart fletcher cooper)
                   <span class="fu">return</span> people</code></pre>
-<p>First we declare the possible values for each person. In the scheme version each number is selected from a range of 1 to 5 so that restrictions such as “Baker does not live on the top floor” need to be stated explicitly. I’ve baked these into the ranges of values. Then we only need to check Fletcher is apart from Smith and Cooper and that no two people are given the same floor which is done by checking the list of floor values is distinct. When we run this we will get a list of possible floor assignments that suit our conditions. One such assignment would be [3,2,4,5,1].</p>
-<p>What’s most impressive about using the list monad for this is how elegant it is. The resulting code is almost identical to the Scheme solution using amb but without requiring extra leverage from interpreters or macros - it comes out naturally from the monad definition.</p>
+<p>First we declare the possible floors for each person. Then we check that the people are not on the same floor, and that fletcher is apart from smith and cooper. When we run this we will get a list of possible floor assignments that suit our conditions. One such assignment would be [3,2,4,5,1].</p>
+<p>What’s most impressive about using the list monad for this is how elegant it is. The resulting code is almost identical to the Scheme solution using amb, without requiring extra leverage from interpreters or macros - it comes out naturally from the monad definition.</p>
 
 <p>Tags: <a href="../tags/haskell.html">haskell</a>, <a href="../tags/functional programming.html">functional programming</a>.</p>
 
