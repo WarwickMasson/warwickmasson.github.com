@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Warwick Masson - Extended Nondeterministic Programming</title>
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+	<link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+        <link rel="alternate" type="application/rss+xml" title="Blog" href="../rss.xml" />
+    </head>
+    <body>
+        <h1><div id="title"><span class="rounded">Warwick Masson</span></div></h1>
+        <div id="navigation">
+            <p><a href="../" class="rounded">Home</a></p>
+            <p><a href="../posts.html" class="rounded">Posts</a></p>
+	    <p><a href="../tags.html" class="rounded">Tags</a></p>
+            <p><a href="../about.html" class="rounded">About</a></p>
+	    <p><a href="../rss.xml" class="rounded">RSS</a></p>
+        </div>
+        <div id="content"><h2>Extended Nondeterministic Programming</h2>
+
+<p>On <strong>June 29, 2013</strong></p>
+
+<p>In a previous <a href="../posts/2013-01-26-nondeterministic-computing.html">post</a> I described how we could perform nondeterministic programming with list monads. In this post I will describe how we get arrays of values that satisfy certain constraints. The mechanism described previously was of the form</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">funcName <span class="fu">=</span> <span class="kw">do</span> 
+    x <span class="ot">&lt;-</span> s
+    y <span class="ot">&lt;-</span> s
+    z <span class="ot">&lt;-</span> s
+    guard predicate x y z
+    <span class="fu">return</span> [x, y, z]</code></pre>
+<p>It’s not immediately clear how we can extend this to work this an arbitrary number of values. However, this turns out to be fairly easy. To get an array of n values from a set in the amb style we can use recursion. The function generate does just this</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">generate <span class="dv">0</span> _ <span class="fu">=</span> [[]]
+generate n set <span class="fu">=</span> <span class="kw">do</span>
+    x <span class="ot">&lt;-</span> set
+    xs <span class="ot">&lt;-</span> generate (<span class="fu">pred</span> n) set
+    <span class="fu">return</span> (x<span class="fu">:</span>xs)</code></pre>
+<p>At each step we can a new value, then cons it with the rest of the list which is generated in a similar way. We can use this style in other ways: if we want n variables from n different sets we can use the generate from function.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">generateFrom [] <span class="fu">=</span> [[]]
+generateFrom (set<span class="fu">:</span>sets) <span class="fu">=</span> <span class="kw">do</span>
+    x <span class="ot">&lt;-</span> set
+    xs <span class="ot">&lt;-</span> generateFrom sets
+    <span class="fu">return</span> (x<span class="fu">:</span>xs)</code></pre>
+<p>This works in the same way as generate, except it uses different sets as domains. Finally, one useful form of generate would be for the items to be distinct. For a set with more than n items we could call generateDistinct to get each subset of n items.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import</span> <span class="dt">Control.Monad</span>
+
+notIn x xs <span class="fu">=</span> guard <span class="fu">$</span> <span class="fu">not</span> (<span class="fu">elem</span> x xs)
+
+generateDistinctItems _ <span class="dv">0</span> _ <span class="fu">=</span> [[]]
+generateDistinctItems items n set <span class="fu">=</span> <span class="kw">do</span>
+    x <span class="ot">&lt;-</span> set
+    notIn x items
+    xs <span class="ot">&lt;-</span> generateDistinctItems (x<span class="fu">:</span>items) (<span class="fu">pred</span> n) set
+    <span class="fu">return</span> (x<span class="fu">:</span>xs)
+
+generateDistinct n set <span class="fu">=</span> generateDistinctItems [] n set</code></pre>
+<p>So in a few lines of haskell we have generated three different kinds of sets of lists of items. The list monad allows for this amazing expressiveness. In addition it would be trivial to adapt generateDistinctItems to work like generateFrom instead.</p>
+
+<p>Tags: <a href="../tags/haskell.html">haskell</a>, <a href="../tags/functional programming.html">functional programming</a>.</p>
+</div>
+        <div id="footer">
+            <p>This site generated using <a href="http://jaspervdj.be/hakyll">Hakyll</a>.
+            Background by <a href="http://subtlepatterns.com/cubes">Sander Ottens</a>.</p>
+        </div>
+    </body>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-37381827-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</html>
