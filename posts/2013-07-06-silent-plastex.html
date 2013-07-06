@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Warwick Masson - Disabling Warnings and Output from PlasTeX</title>
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+	<link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+        <link rel="alternate" type="application/rss+xml" title="Blog" href="../rss.xml" />
+    </head>
+    <body>
+        <h1><div id="title"><span class="rounded">Warwick Masson</span></div></h1>
+        <div id="navigation">
+            <p><a href="../" class="rounded">Home</a></p>
+            <p><a href="../posts.html" class="rounded">Posts</a></p>
+	    <p><a href="../tags.html" class="rounded">Tags</a></p>
+            <p><a href="../about.html" class="rounded">About</a></p>
+	    <p><a href="../rss.xml" class="rounded">RSS</a></p>
+        </div>
+        <div id="content"><h2>Disabling Warnings and Output from PlasTeX</h2>
+
+<p>On <strong>July  6, 2013</strong></p>
+
+<p>I’ve been using <a href="http://plastex.sourceforge.net">PlasTeX</a> for a few little projects and by default it outputs a tremendous amound of warnings and output. For example parsing one of my sets of notes outputs this:</p>
+<pre><code> ( /usr/local/lib/python2.7/dist-packages/plasTeX/Packages/amsmath.pyc )
+ ( /usr/local/lib/python2.7/dist-packages/plasTeX/Packages/amsfonts.pyc )
+ ( /usr/local/lib/python2.7/dist-packages/plasTeX/Packages/amssymb.pyc )
+ ( /usr/local/lib/python2.7/dist-packages/plasTeX/Packages/amsthm.pyc )
+ ( /usr/local/lib/python2.7/dist-packages/plasTeX/Packages/textcomp.pyc )
+ ( /usr/local/lib/python2.7/dist-packages/plasTeX/Packages/graphicx.pyc )
+ ( /usr/local/lib/python2.7/dist-packages/plasTeX/Packages/geometry.pyc )
+ ( /usr/share/texmf-texlive/tex/latex/preprint/fullpage.sty
+WARNING: unrecognized command/environment: ExecuteOptions
+ )
+WARNING: unrecognized command/environment: fontsize
+ ( /usr/share/texmf-texlive/tex/latex/algorithm2e/algorithm2e.sty
+WARNING: unrecognized command/environment: @makeother
+WARNING: unrecognized command/environment: *
+ ( /usr/local/lib/python2.7/dist-packages/plasTeX/Packages/ifthen.pyc )
+ERROR: Error while reading argument &quot;value&quot; of DeclareOption in /usr/share
+   /texmf-texlive/tex/latex/algorithm2e/algorithm2e.sty on line 568 (ord()
+   expected a character, but string of length 3 found)
+ERROR: Error while expanding &quot;DeclareOption&quot; in /usr/share/texmf-
+   texlive/tex/latex/algorithm2e/algorithm2e.sty on line 568 (ord() expected a
+   character, but string of length 3 found)
+WARNING: Error opening package &quot;algorithm2e.sty&quot; ( ord() expected a
+   character, but string of length 3 found )
+ ).........................................................................
+...........................................................................
+...........................................................................
+...........................................................................
+...........................................................................
+...........................................................................
+...........................................................................
+...........................................................................
+...........................................................................
+...........................................................................
+...........................................................................
+...........................................................................
+...........................................................................
+...........................................................................
+...........................................................................
+...................................................</code></pre>
+<p>Which is obviously undesirable if you’re using it on the commandline. At first I assumed it was just printing to stdout and stderr but trashing those didn’t help. As this wasn’t noted in the documentation, I did a bit of digging and found it was the <a href="http://github.com/nibrahim/PlasTeX/blob/master/plasTeX/Logging.py">logging module</a> that was printing out all of this. If you want to disable logging just add the following:</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ch">from</span> plasTeX.Logging <span class="ch">import</span> disableLogging
+disableLogging()</code></pre>
+<p>and all of the output from using PlasTeX will be silenced.</p>
+
+<p>Tags: <a href="../tags/plastex.html">plastex</a>, <a href="../tags/python.html">python</a>.</p>
+</div>
+        <div id="footer">
+            <p>This site generated using <a href="http://jaspervdj.be/hakyll">Hakyll</a>.
+            Background by <a href="http://subtlepatterns.com/cubes">Sander Ottens</a>.</p>
+        </div>
+    </body>
+    <script type="text/javascript">
+
+</script>
+</html>
