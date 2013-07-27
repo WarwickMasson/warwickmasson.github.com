@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Warwick Masson - Building this Site</title>
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+	<link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+        <link rel="alternate" type="application/rss+xml" title="Blog" href="../rss.xml" />
+    </head>
+    <body>
+        <h1><div id="title"><span class="rounded">Warwick Masson</span></div></h1>
+        <div id="navigation">
+            <p><a href="../" class="rounded">Home</a></p>
+            <p><a href="../posts.html" class="rounded">Posts</a></p>
+	    <p><a href="../tags.html" class="rounded">Tags</a></p>
+            <p><a href="../about.html" class="rounded">About</a></p>
+	    <p><a href="../rss.xml" class="rounded">RSS</a></p>
+        </div>
+        <div id="content"><h2>Building this Site</h2>
+
+<p>On <strong>July 27, 2013</strong></p>
+
+<p>I thought I’d give a run down of how this site was built, and what it runs on.</p>
+<h4 id="hakyll">Hakyll</h4>
+<p><a href="http://jaspervdj.be/hakyll">Hakyll</a> is a Haskell based static site generator. I picked Hakyll because at the time I decided to make a website, I was learning Haskell and it seemed like a fun project. There are number of good <a href="http://jaspervdj.be/hakyll/tutorials.html">tutorials</a> on Hakyll, but I found the most useful thing was to check out read other’s <a href="http://jaspervdj.be/hakyll/examples.htm">sources</a>.</p>
+<h4 id="why-static">Why Static?</h4>
+<p>I decided to make a static website for a few reasons. The biggest thing for me was ease of hosting. As there are no real security issues or maintenance issues, it simplifies running the site to just making and publishing the content. At the same time, I retain control over that content.</p>
+<h4 id="hosting">Hosting</h4>
+<p>The website is hosted on <a href="http://pages.github.com">Github pages</a>, which provides free hosting for static web pages. So far it’s worked pretty well. It provides basically everything you need for a static site such as a cname, favicon, or a custom 404 page. I haven’t noticed any major disruptions, although as it’s a personal website it’s not exactly in high demand.</p>
+<p>One of the nice parts of working with Github pages is the simple work-flow. In order to publish a new page, I just have to commit and push it to the site’s Github repo.</p>
+<h4 id="design">Design</h4>
+<p>The basic design owes a lot to <a href="http://www.learnyouahaskell.com">learn you a haskell</a>, an excellent tutorial on Haskell. As it says in the footer, the background is by <a href="http://subtlepatterns.com/cubes">Sander Ottens</a>. I found that on subtle patterns, which is a good source for minimalist backgrounds.</p>
+<h4 id="comments-and-analytics">Comments and Analytics</h4>
+<p>As it’s a static website, the only way to add more advanced such as comments or analytics is to add some external javascript. At the beginning of the year I added disqus comments, and google analytics.</p>
+<p>The biggest problem for me with these was that they add a bunch of not particularly light javascript. Disqus was the offender in this regard. Given one of the benefits of having a static site in the first place is a fast page-load, I decided to just cut it.</p>
+
+<p>Tags: <a href="../tags/hakyll.html">hakyll</a>, <a href="../tags/haskell.html">haskell</a>.</p>
+</div>
+        <div id="footer">
+            <p>This site generated using <a href="http://jaspervdj.be/hakyll">Hakyll</a>.
+            Background by <a href="http://subtlepatterns.com/cubes">Sander Ottens</a>.</p>
+        </div>
+    </body>
+    <script type="text/javascript">
+
+</script>
+</html>
