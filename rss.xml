@@ -6,8 +6,15 @@
         <description><![CDATA[Posts from warwickmasson.com]]></description>
         <atom:link href="http://warwickmasson.com/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Sat, 27 Jul 2013 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Sat, 03 Aug 2013 00:00:00 UT</lastBuildDate>
         <item>
+    <title>A simple introduction to Lambda Calculus</title>
+    <link>http://warwickmasson.com/posts/2013-08-03-lambda-calculus.html</link>
+    <description><![CDATA[]]></description>
+    <pubDate>Sat, 03 Aug 2013 00:00:00 UT</pubDate>
+    <guid>http://warwickmasson.com/posts/2013-08-03-lambda-calculus.html</guid>
+</item>
+<item>
     <title>Building this Site</title>
     <link>http://warwickmasson.com/posts/2013-07-27-building-this-site.html</link>
     <description><![CDATA[]]></description>
