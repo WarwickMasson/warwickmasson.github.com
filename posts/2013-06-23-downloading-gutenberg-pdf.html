@@ -30,17 +30,17 @@
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">filename=$(</span><span class="kw">basename</span> <span class="ot">$1)</span>
 <span class="kw">wget</span> -p -k -nd <span class="ot">$filename</span></code></pre>
 <p>This downloads all required items like images (-p), converts all links to local ones (-k), and does it all in the local directory (-nd). I’m using <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> to convert the html file to a pdf. However, this won’t work with .gif files, so all of these need to be converted to .png files.</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> <span class="kw">file</span> <span class="kw">in</span> *.gif
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> <span class="kw">file</span> in *.gif
 <span class="kw">do</span>
     <span class="ot">base=</span><span class="st">&quot;</span><span class="ot">${file%</span>.*<span class="ot">}</span><span class="st">&quot;</span>
-    convert <span class="ot">$file</span> <span class="ot">$base</span>.png
+    <span class="kw">convert</span> <span class="ot">$file</span> <span class="ot">$base</span>.png
 <span class="kw">done</span></code></pre>
 <p>Also, we need to replace all references in the html file to .gif with .png. So</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sed</span> -i <span class="st">'s/\.gif/\.png/'</span> <span class="ot">$filename</span></code></pre>
 <p>which does the replacing. This might cause problems with some files that talk about .gif files, but that won’t happen with such old books. The html versions are encoded in iso-8859-1, but pandoc requires utf-8 so we’ll use iconv to convert it.</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">iconv <span class="ot">$filename</span> -f iso-8859-1 -t utf-8 -o temp<span class="ot">$filename</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">iconv</span> <span class="ot">$filename</span> -f iso-8859-1 -t utf-8 -o temp<span class="ot">$filename</span></code></pre>
 <p>Finally, we need to convert the document. In order to manage certain kinds of characters, we need to set the latex-engine for pandoc to use xelatex. This is because the default, pdflatex, can’t convert characters like umlauts. So we call pandoc,</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">pandoc --latex-engine=xelatex temp<span class="ot">$filename</span> -o ../<span class="ot">$2</span>.pdf</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">pandoc</span> --latex-engine=xelatex temp<span class="ot">$filename</span> -o ../<span class="ot">$2</span>.pdf</code></pre>
 <p>which puts the document into the original directory. Finally, we call cleanup by deleting the gutenberg_temp directory.</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">cd</span> ..
 <span class="kw">rm</span> -rf gutenberg_temp</code></pre>

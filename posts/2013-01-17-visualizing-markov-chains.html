@@ -38,11 +38,11 @@ rainy    0.7     0.3</code></pre>
 rainy 10%</code></pre>
 <p>It’s easy to imagine how this chains works - a large number of sunny days with occasional rainy days and rarer rainy periods. Imagining how larger Markov chains operate can be difficult, for example if we have 10 states we’d have a 10 by 10 transition matrix. One way is follow an instances of the chain as it moves from state to state. This gives us some idea, but it can still be hard to see exactly how the probabilities work. Rather, let’s follow a group of instances.</p>
 <p>This animation simulates a large number of ants moving from nest to nest. When the ant arrives at a next nest, it moves to another nest based on a randomly generated transition matrix. I’ve biased the transition matrix so that it appears more uneven and added some noise to the speed of the ants so that they don’t just set off at the same time.</p>
-<iframe style="border: 0px;" scrolling="no" width="500px" height="500px" src="../js/markov_chain.html"></iframe>
-
+<iframe style="border: 0px;" scrolling="no" width="500px" height="500px" src="../js/markov_chain.html">
+</iframe>
 <p>Notice how certain paths are well traveled and others only have intermittent ants. The number of ants of a path from nest A to nest B is not just dependent on probability of going from A to B but also how many ants are going to A in the first place. This allows us to see the general traffic flow in the chain.</p>
 
-<p>Tags: <a href="../tags/d3.html">d3</a>, <a href="../tags/markov chains.html">markov chains</a>.</p>
+<p>Tags: <a href="../tags/d3.html">d3</a>, <a href="../tags/markov%20chains.html">markov chains</a>.</p>
 </div>
         <div id="footer">
             <p>This site generated using <a href="http://jaspervdj.be/hakyll">Hakyll</a>.
