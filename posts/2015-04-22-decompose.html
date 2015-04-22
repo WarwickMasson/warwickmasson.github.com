@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Image Glitching with the discrete Fourier transform</title>
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
+	<link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+        <link rel="alternate" type="application/rss+xml" title="Blog" href="../rss.xml" />
+    </head>
+    <body>
+        <div id="content">
+        <img src="../images/header.jpg" alt="header" />
+        </div>
+        <div id="navigation">
+            <p><h2 class="rounded">Warwick Masson</h2></p>
+            <p><a href="../" class="rounded">Home</a></p>
+            <p><a href="../posts.html" class="rounded">Posts</a></p>
+	    <p><a href="../tags.html" class="rounded">Tags</a></p>
+            <p><a href="../about.html" class="rounded">About</a></p>
+	    <p><a href="../rss.xml" class="rounded">RSS</a></p>
+        </div>
+        <div id="content"><h2>Image Glitching with the discrete Fourier transform</h2>
+
+<p>On <strong>April 22, 2015</strong></p>
+
+<p>The discrete Fourier transform turns a spatial picture into a frequency picture. By using this, we can analyze the image as a set of frequencies. Let’s take as a base image:</p>
+<p><image src="http://i.imgur.com/l8W6NRH.jpg"></image></p>
+<p>The Fourier transform of this image gives us the amplitudes of the various frequencies. As it is complex function, it has a real and an imaginary part, which are:</p>
+<p><image src="http://i.imgur.com/JvObydc.png"></image> <image src="http://i.imgur.com/LDMdGNN.png"></image></p>
+<p>These images are however not very informative. One thing we can consider is the magnitude of the transformed image. This is given by the square roots of the real and imaginary parts of the transform.</p>
+<p><image src="http://i.imgur.com/JlMOUZf.png"></image></p>
+<p>The magnitude shows how much a particular frequency is in the image. The phase is another useful function. The phase indicates where the frequency component is in the image, and is given by the arctan2 of the real and imaginary parts of the transform.</p>
+<p><image src="http://i.imgur.com/y2BLDiy.png"></image></p>
+<p>We can get back to the original image by using the inverse discrete Forier transform.</p>
+<h4 id="fft2-and-fftshift">FFT2 and FFTSHIFT</h4>
+<p>In Octave, the 2D fast Fourier transform is given the function fft2(I). The point (0, 0) of the image is the brightness, as this is a constant value i.e. it’s applied equally to each pixel. FFTshift the higher value high frequencies in the middle, which is easier to work with. <a href="http://www.mvkonnik.info/2014/06/fft-ifft-and-why-do-we-need-fftshift.html">This link is a good explanation of the fftshift function</a>.</p>
+<p>The Octave inverse 2D fast fourier transform is ifft2(I). The inverse shift function must be used before this: ifftshift. When we perform the inverse, we still have a complex number matrix, the original image is given by the real part of this. If we have an image I, I = real(ifft2(ifftshift(fftshift(fft2(I))))).</p>
+<h4 id="filtering">Filtering</h4>
+<p>We can filter out particular frequencies by setting them to 0 in the transform. When we invert the modified transform, those frequencies are removed from the image. For example, if we use the filter</p>
+<p><image src="http://i.imgur.com/DhkFGyN.png"></image></p>
+<p>We remove all but the high frequencies in the centre of the image. We get the lower resolution image:</p>
+<p><image src="http://i.imgur.com/wSq0dvx.png"></image></p>
+<p>What’s interesting is we can get a pretty good approximation of the image with just those frequencies. If we start with a small filter and expand it, we can see how the size of the filter increases the quality of the image.</p>
+<video autoplay loop src="http://zippy.gfycat.com/DemandingIncomparableHarlequinbug.webm">
+</video>
+<video autoplay loop src="http://zippy.gfycat.com/ParallelMindlessEastrussiancoursinghounds.webm">
+</video>
+<h3 id="glitches">Glitches</h3>
+<p>While working on this, I found a number of interesting glitches. First, if we take the imaginary part of the result instead of the real part, we get an image:</p>
+<p><image src="http://i.imgur.com/0uOmaWT.png"></image></p>
+<p>These are the leftover parts of the image. Now, using the animated filter and multiplying it with the original image to add colour, we get:</p>
+<video autoplay loop src="http://giant.gfycat.com/GrimDescriptiveGopher.webm">
+</video>
+<p>This is how I made the header image for this website.</p>
+<p>The second glitch occured when I forgot to use the fftshift function. When using the circular filter without having shifted the low frequencies into the centre, we instead take only the outer corners. As such, we can only use low frequencies in the image. If we use the circular filter we get an image:</p>
+<p><image src="http://i.imgur.com/51ggnBb.png"></image></p>
+<p>We can see the actual waves in the image, because they are all low frequency. This can lead to interesting images, such as this:</p>
+<p><image src="http://i.imgur.com/RcFE9c9.png"></image></p>
+<h3 id="source-code">Source Code</h3>
+<p>I’ve upload the code I used to generate these images and videos to github. It’s available <a href="https://github.com/WarwickMasson/fourier_glitch">here</a>.</p>
+
+<p>Tags: <a href="../tags/octave.html">octave</a>, <a href="../tags/fourier-transform.html">fourier-transform</a>, <a href="../tags/image-processing.html">image-processing</a>.</p>
+</div>
+        <div id="footer">
+            <p>This site generated using <a href="http://jaspervdj.be/hakyll">Hakyll</a>.
+            Background by <a href="http://subtlepatterns.com/cubes">Sander Ottens</a>.</p>
+        </div>
+    </body>
+    <script type="text/javascript">
+
+</script>
+</html>
